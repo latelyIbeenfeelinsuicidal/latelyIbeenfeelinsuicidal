@@ -1,203 +1,205 @@
 -- GUI Setup
-local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "PassionHubGUI"
-screenGui.Parent = game.Players.LocalPlayer.PlayerGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Name = "PassionHub"
 
--- Create Main Frame
+-- Main Frame
 local mainFrame = Instance.new("Frame")
-mainFrame.Size = UDim2.new(0, 300, 0, 400)
-mainFrame.Position = UDim2.new(0, 10, 0, 10)
+mainFrame.Size = UDim2.new(0, 400, 0, 500)
+mainFrame.Position = UDim2.new(0.5, -200, 0.5, -250)
 mainFrame.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-mainFrame.BackgroundTransparency = 0.5
-mainFrame.Parent = screenGui
+mainFrame.BorderSizePixel = 0
+mainFrame.Visible = false
+mainFrame.Parent = ScreenGui
+mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+mainFrame.ClipsDescendants = true
+mainFrame.BackgroundTransparency = 0.2
+mainFrame.Style = Enum.FrameStyle.Rounded
 
--- Create Title
-local title = Instance.new("TextLabel")
-title.Text = "Passion Hub"
-title.Size = UDim2.new(0, 300, 0, 50)
-title.Position = UDim2.new(0, 0, 0, 0)
-title.TextColor3 = Color3.fromRGB(255, 255, 255)
-title.BackgroundTransparency = 1
-title.TextScaled = true
-title.Parent = mainFrame
+-- Title Label
+local titleLabel = Instance.new("TextLabel")
+titleLabel.Size = UDim2.new(1, 0, 0, 40)
+titleLabel.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+titleLabel.Text = "PassionHub"
+titleLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+titleLabel.TextSize = 24
+titleLabel.TextAlign = Enum.TextAnchor.MiddleCenter
+titleLabel.Parent = mainFrame
 
--- Variables for toggling features
-local lowArcAimbotEnabled = false
-local highArcAimbotEnabled = false
-local autoShootEnabled = false
-local speedChangerEnabled = false
-
--- Low Arc Aimbot Button
-local lowArcButton = Instance.new("TextButton")
-lowArcButton.Text = "Low Arc Aimbot"
-lowArcButton.Size = UDim2.new(0, 280, 0, 40)
-lowArcButton.Position = UDim2.new(0, 10, 0, 60)
-lowArcButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-lowArcButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-lowArcButton.TextScaled = true
-lowArcButton.Parent = mainFrame
-
--- Low Arc Aimbot Logic
-lowArcButton.MouseButton1Click:Connect(function()
-    lowArcAimbotEnabled = not lowArcAimbotEnabled
-    if lowArcAimbotEnabled then
-        lowArcButton.Text = "Low Arc Aimbot: ON"
-        print("Low Arc Aimbot Enabled")
-    else
-        lowArcButton.Text = "Low Arc Aimbot: OFF"
-        print("Low Arc Aimbot Disabled")
-    end
-end)
-
--- High Arc Aimbot Button
-local highArcButton = Instance.new("TextButton")
-highArcButton.Text = "High Arc Aimbot"
-highArcButton.Size = UDim2.new(0, 280, 0, 40)
-highArcButton.Position = UDim2.new(0, 10, 0, 110)
-highArcButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-highArcButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-highArcButton.TextScaled = true
-highArcButton.Parent = mainFrame
-
--- High Arc Aimbot Logic
-highArcButton.MouseButton1Click:Connect(function()
-    highArcAimbotEnabled = not highArcAimbotEnabled
-    if highArcAimbotEnabled then
-        highArcButton.Text = "High Arc Aimbot: ON"
-        print("High Arc Aimbot Enabled")
-    else
-        highArcButton.Text = "High Arc Aimbot: OFF"
-        print("High Arc Aimbot Disabled")
-    end
-end)
-
--- Auto-Shoot Button
-local autoShootButton = Instance.new("TextButton")
-autoShootButton.Text = "Auto-Shoot"
-autoShootButton.Size = UDim2.new(0, 280, 0, 40)
-autoShootButton.Position = UDim2.new(0, 10, 0, 160)
-autoShootButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-autoShootButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-autoShootButton.TextScaled = true
-autoShootButton.Parent = mainFrame
-
--- Auto-Shoot Logic
-autoShootButton.MouseButton1Click:Connect(function()
-    autoShootEnabled = not autoShootEnabled
-    if autoShootEnabled then
-        autoShootButton.Text = "Auto-Shoot: ON"
-        print("Auto-Shoot Enabled")
-    else
-        autoShootButton.Text = "Auto-Shoot: OFF"
-        print("Auto-Shoot Disabled")
-    end
-end)
-
--- Speed Changer Button
-local speedChangerButton = Instance.new("TextButton")
-speedChangerButton.Text = "Speed Changer"
-speedChangerButton.Size = UDim2.new(0, 280, 0, 40)
-speedChangerButton.Position = UDim2.new(0, 10, 0, 210)
-speedChangerButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-speedChangerButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
-speedChangerButton.TextScaled = true
-speedChangerButton.Parent = mainFrame
-
--- Speed Changer Logic
-speedChangerButton.MouseButton1Click:Connect(function()
-    speedChangerEnabled = not speedChangerEnabled
-    if speedChangerEnabled then
-        speedChangerButton.Text = "Speed Changer: ON"
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 30
-        print("Speed Changer Enabled")
-    else
-        speedChangerButton.Text = "Speed Changer: OFF"
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-        print("Speed Changer Disabled")
-    end
-end)
-
--- WalkSpeed Adjustment Slider (16 to 30)
-local speedSlider = Instance.new("Slider")
-speedSlider.MinValue = 16
-speedSlider.MaxValue = 30
-speedSlider.Value = 16
-speedSlider.Size = UDim2.new(0, 280, 0, 40)
-speedSlider.Position = UDim2.new(0, 10, 0, 260)
-speedSlider.Parent = mainFrame
-
-speedSlider.Changed:Connect(function(value)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = value
-    print("WalkSpeed set to: " .. value)
-end)
-
--- Close Button
-local closeButton = Instance.new("TextButton")
-closeButton.Text = "Close GUI"
-closeButton.Size = UDim2.new(0, 280, 0, 40)
-closeButton.Position = UDim2.new(0, 10, 0, 310)
-closeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
-closeButton.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-closeButton.TextScaled = true
-closeButton.Parent = mainFrame
-
-closeButton.MouseButton1Click:Connect(function()
-    screenGui:Destroy()  -- Remove the GUI from the player's screen
-    print("GUI Closed")
-end)
-
--- Anti-Cheat Logic (Prevents obvious exploiters)
-game:GetService("Players").PlayerAdded:Connect(function(player)
-    player.CharacterAdded:Connect(function(character)
-        local humanoid = character:WaitForChild("Humanoid")
-        if humanoid.WalkSpeed > 50 then
-            humanoid.WalkSpeed = 16  -- Reset to normal speed if it's too high
-            print("Anti-Cheat: WalkSpeed reset for " .. player.Name)
-        end
-    end)
-end)
-
--- Toggle the GUI with Left Control key
-local isGuiOpen = true
-local function toggleGui()
-    isGuiOpen = not isGuiOpen
-    screenGui.Enabled = isGuiOpen
+-- Draggable functionality
+local dragging = false
+local dragInput, dragStart, startPos
+local function updateDrag(input)
+    local delta = input.Position - dragStart
+    mainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
 end
 
-game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessedEvent)
-    if not gameProcessedEvent and input.KeyCode == Enum.KeyCode.LeftControl then
-        toggleGui()  -- Toggle the visibility of the GUI
+titleLabel.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = mainFrame.Position
+        input.Changed:Connect(function()
+            if dragging then
+                updateDrag(input)
+            end
+        end)
     end
 end)
 
--- Show the GUI by default
-screenGui.Enabled = true
-
--- Aimbot Functions
-game:GetService("RunService").RenderStepped:Connect(function()
-    local player = game.Players.LocalPlayer
-    local ball = workspace:FindFirstChild("Basketball")
-    local hoop = workspace:FindFirstChild("Hoop")
-    
-    if ball and hoop then
-        if lowArcAimbotEnabled and (ball.Position - player.Character.HumanoidRootPart.Position).Magnitude < 50 then
-            ball.CFrame = CFrame.new(player.Character.HumanoidRootPart.Position + Vector3.new(0, 5, 0))
-            ball.Velocity = Vector3.new(0, 50, 0)  -- Low arc trajectory
-        end
-        
-        if highArcAimbotEnabled and (ball.Position - player.Character.HumanoidRootPart.Position).Magnitude < 50 then
-            ball.CFrame = CFrame.new(player.Character.HumanoidRootPart.Position + Vector3.new(0, 10, 0))
-            ball.Velocity = Vector3.new(0, 100, 0)  -- High arc trajectory
-        end
-        
-        -- Auto-Shoot: Trigger when player jumps
-        if autoShootEnabled then
-            player.Character:WaitForChild("Humanoid").Jumping:Connect(function()
-                local distanceToHoop = (hoop.Position - ball.Position).Magnitude
-                local shootPower = math.clamp(100 / distanceToHoop, 20, 100)  -- Adjust power based on distance
-                ball.Velocity = (hoop.Position - ball.Position).unit * shootPower
-                print("Auto-Shoot: Ball shot with power " .. shootPower)
-            end)
-        end
+titleLabel.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
     end
+end)
+
+-- Tabs Container
+local tabButtons = {}
+local tabs = {}
+
+local function createTab(tabName, position)
+    local button = Instance.new("TextButton")
+    button.Size = UDim2.new(0, 100, 0, 40)
+    button.Position = UDim2.new(0, 0, 0, position)
+    button.Text = tabName
+    button.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+    button.TextColor3 = Color3.fromRGB(255, 255, 255)
+    button.TextSize = 18
+    button.Parent = mainFrame
+
+    local tab = Instance.new("Frame")
+    tab.Size = UDim2.new(1, 0, 1, -40)
+    tab.Position = UDim2.new(0, 0, 0, 40)
+    tab.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+    tab.Visible = false
+    tab.Parent = mainFrame
+    table.insert(tabs, tab)
+
+    button.MouseButton1Click:Connect(function()
+        for _, t in pairs(tabs) do
+            t.Visible = false
+        end
+        tab.Visible = true
+    end)
+end
+
+-- Create Tabs for Aimbots, WalkSpeed, and Features
+createTab("Aimbots", 40)
+createTab("WalkSpeed", 80)
+createTab("Features", 120)
+
+-- Aimbots Tab (Low and High Arc)
+local aimbotSection = Instance.new("Frame")
+aimbotSection.Size = UDim2.new(1, 0, 1, 0)
+aimbotSection.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+aimbotSection.Parent = tabs[1]
+
+local lowArcToggle = Instance.new("TextButton")
+lowArcToggle.Size = UDim2.new(1, 0, 0, 50)
+lowArcToggle.Position = UDim2.new(0, 0, 0, 0)
+lowArcToggle.Text = "Low Arc Aimbot"
+lowArcToggle.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+lowArcToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+lowArcToggle.TextSize = 18
+lowArcToggle.Parent = aimbotSection
+
+local highArcToggle = Instance.new("TextButton")
+highArcToggle.Size = UDim2.new(1, 0, 0, 50)
+highArcToggle.Position = UDim2.new(0, 0, 0, 60)
+highArcToggle.Text = "High Arc Aimbot"
+highArcToggle.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+highArcToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+highArcToggle.TextSize = 18
+highArcToggle.Parent = aimbotSection
+
+-- WalkSpeed Tab
+local walkSpeedTab = Instance.new("Frame")
+walkSpeedTab.Size = UDim2.new(1, 0, 1, 0)
+walkSpeedTab.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+walkSpeedTab.Parent = tabs[2]
+
+local walkSpeedSlider = Instance.new("TextBox")
+walkSpeedSlider.Size = UDim2.new(1, 0, 0, 50)
+walkSpeedSlider.Position = UDim2.new(0, 0, 0, 0)
+walkSpeedSlider.Text = "WalkSpeed Multiplier: 1"
+walkSpeedSlider.TextColor3 = Color3.fromRGB(255, 255, 255)
+walkSpeedSlider.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+walkSpeedSlider.TextSize = 18
+walkSpeedSlider.Parent = walkSpeedTab
+
+-- Features Tab (Auto Guard, Reach)
+local featuresTab = Instance.new("Frame")
+featuresTab.Size = UDim2.new(1, 0, 1, 0)
+featuresTab.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+featuresTab.Parent = tabs[3]
+
+local autoGuardToggle = Instance.new("TextButton")
+autoGuardToggle.Size = UDim2.new(1, 0, 0, 50)
+autoGuardToggle.Position = UDim2.new(0, 0, 0, 0)
+autoGuardToggle.Text = "Auto Guard"
+autoGuardToggle.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+autoGuardToggle.TextColor3 = Color3.fromRGB(255, 255, 255)
+autoGuardToggle.TextSize = 18
+autoGuardToggle.Parent = featuresTab
+
+local reachSlider = Instance.new("TextBox")
+reachSlider.Size = UDim2.new(1, 0, 0, 50)
+reachSlider.Position = UDim2.new(0, 0, 0, 60)
+reachSlider.Text = "Reach Distance: 1"
+reachSlider.TextColor3 = Color3.fromRGB(255, 255, 255)
+reachSlider.BackgroundColor3 = Color3.fromRGB(0, 0, 255)
+reachSlider.TextSize = 18
+reachSlider.Parent = featuresTab
+
+-- Toggle GUI with Left Control
+local isGuiOpen = false
+local function toggleGui()
+    isGuiOpen = not isGuiOpen
+    mainFrame.Visible = isGuiOpen
+end
+
+game:GetService("UserInputService").InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == Enum.KeyCode.LeftControl then
+        toggleGui()
+    end
+end)
+
+-- Feature Functionality
+local lowArcAimbotEnabled = false
+local highArcAimbotEnabled = false
+local walkSpeedMultiplier = 1
+local reachDistance = 1
+local autoGuardEnabled = false
+
+-- Aimbot Functionality
+lowArcToggle.MouseButton1Click:Connect(function()
+    lowArcAimbotEnabled = not lowArcAimbotEnabled
+    lowArcToggle.Text = lowArcAimbotEnabled and "Low Arc Aimbot (ON)" or "Low Arc Aimbot (OFF)"
+end)
+
+highArcToggle.MouseButton1Click:Connect(function()
+    highArcAimbotEnabled = not highArcAimbotEnabled
+    highArcToggle.Text = highArcAimbotEnabled and "High Arc Aimbot (ON)" or "High Arc Aimbot (OFF)"
+end)
+
+walkSpeedSlider.FocusLost:Connect(function()
+    local multiplier = tonumber(walkSpeedSlider.Text:match("%d+"))
+    if multiplier then
+        walkSpeedMultiplier = multiplier
+        walkSpeedSlider.Text = "WalkSpeed Multiplier: " .. walkSpeedMultiplier
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16 * walkSpeedMultiplier
+    end
+end)
+
+reachSlider.FocusLost:Connect(function()
+    local distance = tonumber(reachSlider.Text:match("%d+"))
+    if distance then
+        reachDistance = distance
+        reachSlider.Text = "Reach Distance: " .. reachDistance
+    end
+end)
+
+autoGuardToggle.MouseButton1Click:Connect(function()
+    autoGuardEnabled = not autoGuardEnabled
+    autoGuardToggle.Text = autoGuardEnabled and "Auto Guard (ON)" or "Auto Guard (OFF)"
 end)
